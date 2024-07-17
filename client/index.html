@@ -20,7 +20,7 @@
             event.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const serverURL = 'https://email-verification-client.vercel.app';
+            const serverURL = 'https://email-verification-server.vercel.app';
             const response = await fetch(`${serverURL}/register`, {
                 method: 'POST',
                 headers: {

@@ -17,7 +17,7 @@ const iv = crypto.randomBytes(16);
 // const secretKey = crypto.randomBytes(32).toString('hex'); // Generates a 32-byte (256-bit) key and converts it to a hex string
 // console.log(secretKey);
 const secretKey = 'f89d00967cb05af952bcc92e6d978c0406cebffe418a4fc09460ebe3bf0b4b9f';
-const serverURL = 'https://email-verification-client.vercel.app';
+const serverURL = 'https://email-verification-server.vercel.app';
 
 const transporter = nodemailer.createTransport({
     service: 'Gmail',
