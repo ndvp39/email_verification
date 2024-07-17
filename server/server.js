@@ -56,7 +56,54 @@ app.post('/register', (req, res) => {
         from: 'your-email@gmail.com',
         to: email,
         subject: 'Welcome!',
-        text: `Please click the following link to complete your registration: ${serverURL}/verify?token=${tokenIv}`,
+        text: `
+
+
+                body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f4f4f4;
+                    margin: 0;
+                    padding: 0;
+                }
+                .container {
+                    max-width: 600px;
+                    margin: 0 auto;
+                    padding: 20px;
+                    background-color: #ffffff;
+                    border-radius: 8px;
+                    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                }
+                h1 {
+                    color: #333333;
+                }
+                p {
+                    color: #666666;
+                }
+                .btn {
+                    display: inline-block;
+                    padding: 10px 20px;
+                    background-color: #007bff;
+                    color: #ffffff;
+                    text-decoration: none;
+                    border-radius: 5px;
+                }
+                .btn:hover {
+                    background-color: #0056b3;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>Welcome to Email Verification</h1>
+                <p>Please click the following link to complete your registration:</p>
+                <p><a class="btn" href="${serverURL}/verify?token=${tokenIv}" target="_blank">Verify Email</a></p>
+                <p>${serverURL}/verify?token=${tokenIv}</p>
+                <p>If you didn't request this, you can safely ignore this email.</p>
+                <p>Thank you!</p>
+            </div>
+        </body>
+        Please click the following link to complete your registration: ${serverURL}/verify?token=${tokenIv}
+        `,
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
