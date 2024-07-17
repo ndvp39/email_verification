@@ -17,6 +17,7 @@ const iv = crypto.randomBytes(16);
 // const secretKey = crypto.randomBytes(32).toString('hex'); // Generates a 32-byte (256-bit) key and converts it to a hex string
 // console.log(secretKey);
 const secretKey = 'f89d00967cb05af952bcc92e6d978c0406cebffe418a4fc09460ebe3bf0b4b9f';
+const serverURL = 'https://email-verification-client.vercel.app';
 
 const transporter = nodemailer.createTransport({
     service: 'Gmail',
@@ -53,7 +54,7 @@ app.post('/register', (req, res) => {
         from: 'your-email@gmail.com',
         to: email,
         subject: 'Welcome!',
-        text: `Please click the following link to complete your registration: http://localhost:3000/verify?token=${tokenIv}`,
+        text: `Please click the following link to complete your registration: ${serverURL}/verify?token=${tokenIv}`,
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
