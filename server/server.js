@@ -101,19 +101,16 @@ app.post('/register', (req, res) => {
                     <p><a class="btn" href="${serverURL}/verify?token=${tokenIv}" target="_blank">Verify Email</a></p>
                     <p>If you didn't request this, you can safely ignore this email.</p>
                     <p>Thank you!</p>
+                    <p><br><br>
+                        Welcome to Email Verification<br>
+                        Please click the following link to complete your registration:<br>
+                        ${serverURL}/verify?token=${tokenIv}<br>
+                        If you didn't request this, you can safely ignore this email.<br><br>
+                        Thank you!
+                    </p>
                 </div>                
             </body>
             </html>
-        `,
-        text: `
-            Welcome to Email Verification
-            
-            Please click the following link to complete your registration:
-            ${serverURL}/verify?token=${tokenIv}
-            
-            If you didn't request this, you can safely ignore this email.
-            
-            Thank you!
         `
     };
     
