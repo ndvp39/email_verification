@@ -39,7 +39,7 @@ app.post('/register', (req, res) => {
     const { email, password } = req.body;
 
     if (users[email]) {
-        return res.status(400).json({ message: 'User already exists ' });
+        return res.status(400).json({ message: 'User already exists' });
     }
 
     // Store user in "database"
