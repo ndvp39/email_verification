@@ -66,24 +66,29 @@ app.post('/register', (req, res) => {
 });
 
 app.get('/verify', (req, res) => {
-    const { token } = req.query;
-    const [ivHex, encryptedToken] = token.split(':');
-    const ivBuffer = Buffer.from(ivHex, 'hex');
+    try{
+        const { token } = req.query;
+        const [ivHex, encryptedToken] = token.split(':');
+        const ivBuffer = Buffer.from(ivHex, 'hex');
 
-    const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(secretKey, 'hex'), ivBuffer);
-    let decryptedEmail = decipher.update(encryptedToken, 'hex', 'utf8');
-    decryptedEmail += decipher.final('utf8');
+        const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(secretKey, 'hex'), ivBuffer);
+        let decryptedEmail = decipher.update(encryptedToken, 'hex', 'utf8');
+        decryptedEmail += decipher.final('utf8');
+        if (users[decryptedEmail].verified) {
+            res.send('<h1>You already verified!</h1>');
+        }
+        else if (users[decryptedEmail]) {
+            // Update user status to "verified"
+            users[decryptedEmail].verified = true;
+            res.send('<h1>Successfully Registered!</h1>');
+        } else {
+            res.status(400).send('<h1>Invalid token</h1>');
+        }
+    } catch (error) {
+        console.error('Error verifying token:', error);
+        res.status(500).send('<h1>Page not exist!</h1></h1>');
+    }
 
-    if (users[decryptedEmail].verified){
-        res.send('<h1>You already verified!</h1>');
-    }
-    else if (users[decryptedEmail]) {
-        // Update user status to "verified"
-        users[decryptedEmail].verified = true;
-        res.send('<h1>Successfully Registered!</h1>');
-    } else {
-        res.status(400).send('<h1>Invalid token</h1>');
-    }
 });
 
 const port = process.env.PORT || 3000;
