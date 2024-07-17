@@ -11,7 +11,9 @@ app.use(cors());
 const users = {};
 
 // Generate a random initialization vector
-const iv = crypto.randomBytes(16);
+// const iv = crypto.randomBytes(16).toString('hex');
+// console.log('Initialization Vector:', iv);
+const iv ='b0015b0e66ebfa2903f5fbdbb64f4683';
 
 // Secret key for encryption and decryption
 // const secretKey = crypto.randomBytes(32).toString('hex'); // Generates a 32-byte (256-bit) key and converts it to a hex string
