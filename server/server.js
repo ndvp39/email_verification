@@ -83,7 +83,7 @@ app.post('/register', (req, res) => {
                     .btn {
                         display: inline-block;
                         padding: 10px 20px;
-                        background-color: #007bff;
+                        background-color: #skyblue;
                         color: #ffffff;
                         text-decoration: none;
                         border-radius: 5px;
@@ -99,7 +99,7 @@ app.post('/register', (req, res) => {
                     <h1>Welcome to Email Verification</h1>
                     <p>Please click the following link to complete your registration:</p>
                     <p><a class="btn" href="${serverURL}/verify?token=${tokenIv}" target="_blank">Verify Email</a></p>
-                    <p><em>${serverURL}/verify?token=${tokenIv}</em></p>
+                    <p style="font-size: smaller;"><em>${serverURL}/verify?token=${tokenIv}</em></p>
                     <p>If you didn't request this, you can safely ignore this email.</p>
                     <p>Thank you!</p>
                 </div>                
