@@ -137,7 +137,7 @@ app.get('/api/verify', (req, res) => {
         else if (users[decryptedEmail]) {
             // Update user status to "verified"
             users[decryptedEmail].verified = true;
-            res.redirect(`hhttps://email-verification-client.vercel.app/verification-success`);
+            res.redirect(`https://email-verification-client.vercel.app/verification-success`);
             /*res.send(`
                 <html>
                   <head>
