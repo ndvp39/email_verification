@@ -19,7 +19,8 @@ const iv = crypto.randomBytes(16);
 const secretKey = crypto.randomBytes(32); // Generates a 32-byte (256-bit) key and converts it to a hex string
 // console.log(secretKey).toString('hex');
 // const secretKey = 'f89d00967cb05af952bcc92e6d978c0406cebffe418a4fc09460ebe3bf0b4b9f';
-const serverURL = 'https://email-verification-server.vercel.app';
+const serverURL = 'https://email-verification-server.vercel.app/api';
+
 
 const transporter = nodemailer.createTransport({
     service: 'Gmail',
@@ -97,8 +98,8 @@ app.post('/register', (req, res) => {
                 <div class="container">
                     <h1>Welcome to Email Verification</h1>
                     <p>Please click the following link to complete your registration:</p>
-                    <p><a class="btn" href="${serverURL}/api/verify?token=${tokenIv}" target="_blank">Verify Email</a></p>
-                    <p style="font-size: smaller;"><em>${serverURL}/api/verify?token=${tokenIv}</em></p>
+                    <p><a class="btn" href="${serverURL}/verify?token=${tokenIv}" target="_blank">Verify Email</a></p>
+                    <p style="font-size: smaller;"><em>${serverURL}/verify?token=${tokenIv}</em></p>
                     <p>If you didn't request this, you can safely ignore this email.</p>
                     <p>Thank you!</p>
                 </div>                

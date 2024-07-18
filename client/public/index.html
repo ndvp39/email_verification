@@ -88,8 +88,8 @@
             event.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const serverURL = 'https://email-verification-server.vercel.app';
-            const response = await fetch(`${serverURL}/api/register`, {
+            const serverURL = 'https://email-verification-server.vercel.app/api';
+            const response = await fetch(`${serverURL}/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
