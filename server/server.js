@@ -102,8 +102,8 @@ app.post('/api/register', (req, res) => {
                 <div class="container">
                     <h1>Welcome to Email Verification</h1>
                     <p>Please click the following link to complete your registration:</p>
-                    <p><a class="btn" href="${serverURL}/verify?token=${tokenIv}" target="_blank">Verify Email</a></p>
-                    <p style="font-size: smaller;"><em>${serverURL}/verify?token=${tokenIv}</em></p>
+                    <p><a class="btn" href="${serverURL}/api/verify?token=${tokenIv}" target="_blank">Verify Email</a></p>
+                    <p style="font-size: smaller;"><em>${serverURL}/api/verify?token=${tokenIv}</em></p>
                     <p>If you didn't request this, you can safely ignore this email.</p>
                     <p>Thank you!</p>
                 </div>                
