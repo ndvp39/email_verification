@@ -137,8 +137,8 @@ app.get('/api/verify', (req, res) => {
         else if (users[decryptedEmail]) {
             // Update user status to "verified"
             users[decryptedEmail].verified = true;
-            res.redirect(`https://email-verification-client.vercel.app/verification-success.html`);
-            /*res.send(`
+            //res.redirect(`https://email-verification-client.vercel.app/verification-success.html`);
+            res.send(`
                 <html>
                   <head>
                     <style>
@@ -183,7 +183,7 @@ app.get('/api/verify', (req, res) => {
                     </div>
                   </body>
                 </html>
-              `);*/
+              `);
         } else {
             res.status(400).send('<h1>Invalid token</h1>');
         }
