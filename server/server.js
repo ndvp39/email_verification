@@ -44,7 +44,7 @@ app.post('/register', (req, res) => {
 
     // Store user in "database"
     users[email] = { email, password };
-
+    console.log(users);
     // Create an encrypted token
     const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(secretKey, 'hex'), iv);
     let token = cipher.update(email, 'utf8', 'hex');
@@ -137,6 +137,7 @@ app.get('/verify', (req, res) => {
         } else {
             res.status(400).send('<h1>Invalid token</h1>');
         }
+        console.log(users);
     } catch (error) {
         console.error('Error verifying token:', error);
         res.status(500).send('<h1>Page not exist!</h1></h1>');
