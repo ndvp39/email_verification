@@ -25,7 +25,7 @@ const transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
         user: 'market.monitor.b@gmail.com',
-        pass: 'vhvs csdv fmul pgbe',
+        pass: 'gjyp qrsq osit grvk',
     },
 });
 
@@ -44,7 +44,7 @@ app.post('/register', (req, res) => {
 
     // Store user in "database"
     users[email] = { email, password };
-    console.log(users);
+    
     // Create an encrypted token
     const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(secretKey, 'hex'), iv);
     let token = cipher.update(email, 'utf8', 'hex');
@@ -133,11 +133,55 @@ app.get('/verify', (req, res) => {
         else if (users[decryptedEmail]) {
             // Update user status to "verified"
             users[decryptedEmail].verified = true;
-            res.send('<h1>Successfully Registered!</h1>');
+            res.send(`
+                <html>
+                  <head>
+                    <style>
+                      body {
+                        font-family: Arial, sans-serif;
+                        background-color: #f4f4f4;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 100vh;
+                        margin: 0;
+                      }
+                      .container {
+                        text-align: center;
+                        background-color: white;
+                        padding: 2em;
+                        border-radius: 10px;
+                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                      }
+                      h1 {
+                        color: #4CAF50;
+                      }
+                      p {
+                        font-size: 1.2em;
+                      }
+                      a {
+                        display: inline-block;
+                        margin-top: 1em;
+                        padding: 0.5em 1em;
+                        color: white;
+                        background-color: #4CAF50;
+                        text-decoration: none;
+                        border-radius: 5px;
+                      }
+                    </style>
+                  </head>
+                  <body>
+                    <div class="container">
+                      <h1>You account was succesfully verified!</h1>
+                      <p>Thank you for register to our website!</p>
+                      <a href="/login">התחבר עכשיו</a>
+                    </div>
+                  </body>
+                </html>
+              `);
         } else {
             res.status(400).send('<h1>Invalid token</h1>');
         }
-        console.log(users);
     } catch (error) {
         console.error('Error verifying token:', error);
         res.status(500).send('<h1>Page not exist!</h1></h1>');
