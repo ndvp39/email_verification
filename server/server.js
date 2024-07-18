@@ -179,7 +179,6 @@ app.get('/api/verify', (req, res) => {
                     <div class="container">
                       <h1>Your account was succesfully verified!</h1>
                       <p>Thank you for register to our website!</p>
-                      <a href="/login">Login Now</a>
                     </div>
                   </body>
                 </html>
