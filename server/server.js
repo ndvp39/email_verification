@@ -172,9 +172,9 @@ app.get('/verify', (req, res) => {
                   </head>
                   <body>
                     <div class="container">
-                      <h1>You account was succesfully verified!</h1>
+                      <h1>Your account was succesfully verified!</h1>
                       <p>Thank you for register to our website!</p>
-                      <a href="/login">התחבר עכשיו</a>
+                      <a href="/login">Login Now</a>
                     </div>
                   </body>
                 </html>
@@ -184,7 +184,7 @@ app.get('/verify', (req, res) => {
         }
     } catch (error) {
         console.error('Error verifying token:', error);
-        res.status(500).send('<h1>Page not exist!</h1></h1>');
+        res.status(500).send('<h1>Page not exist!</h1>');
     }
 
 });
