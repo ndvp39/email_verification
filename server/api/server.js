@@ -34,7 +34,6 @@ app.get('/', (req, res) => {
     res.send('<h1>Email Verification - server</h1>');
 });
 
-
 app.post('/register', (req, res) => {
     const { email, password } = req.body;
 
