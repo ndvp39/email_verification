@@ -98,8 +98,8 @@ app.post('/register', (req, res) => {
                 <div class="container">
                     <h1>Welcome to Email Verification</h1>
                     <p>Please click the following link to complete your registration:</p>
-                    <p><a class="btn" href="${serverURL}/verify?token=${tokenIv}" target="_blank">Verify Email</a></p>
-                    <p style="font-size: smaller;"><em>${serverURL}/verify?token=${tokenIv}</em></p>
+                    <p><a class="btn" href="${serverURL}/api/verify?token=${tokenIv}" target="_blank">Verify Email</a></p>
+                    <p style="font-size: smaller;"><em>${serverURL}/api/verify?token=${tokenIv}</em></p>
                     <p>If you didn't request this, you can safely ignore this email.</p>
                     <p>Thank you!</p>
                 </div>                
@@ -118,91 +118,76 @@ app.post('/register', (req, res) => {
     });
 });
 
-// Function to send the verification page
-const sendVerificationPage = (res, message, isVerified) => {
-    const htmlContent = `
-        <html>
-          <head>
-            <style>
-              body {
-                font-family: Arial, sans-serif;
-                background-color: #f4f4f4;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                margin: 0;
-              }
-              .container {
-                text-align: center;
-                background-color: white;
-                padding: 2em;
-                border-radius: 10px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-              }
-              h1 {
-                color: ${isVerified ? '#4CAF50' : '#FF0000'};
-              }
-              p {
-                font-size: 1.2em;
-              }
-              a {
-                display: inline-block;
-                margin-top: 1em;
-                padding: 0.5em 1em;
-                color: white;
-                background-color: #4CAF50;
-                text-decoration: none;
-                border-radius: 5px;
-              }
-            </style>
-          </head>
-          <body>
-            <div class="container">
-              <h1>${message}</h1>
-              ${isVerified ? '<p>Thank you for registering on our website!</p><a href="/login">Login Now</a>' : ''}
-            </div>
-          </body>
-        </html>
-      `;
-    
-    res.send(htmlContent);
-};
-
-// Function to verify token
-const verifyToken = (token) => {
-    const [ivHex, encryptedToken] = token.split(':');
-    const ivBuffer = Buffer.from(ivHex, 'hex');
-    
-    const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(secretKey, 'hex'), ivBuffer);
-    let decryptedEmail = decipher.update(encryptedToken, 'hex', 'utf8');
-    decryptedEmail += decipher.final('utf8');
-    
-    return decryptedEmail;
-};
-
-// Verify route
 app.get('/verify', (req, res) => {
-    try {
+    try{
         const { token } = req.query;
-        const decryptedEmail = verifyToken(token);
+        const [ivHex, encryptedToken] = token.split(':');
+        const ivBuffer = Buffer.from(ivHex, 'hex');
 
+        const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(secretKey, 'hex'), ivBuffer);
+        let decryptedEmail = decipher.update(encryptedToken, 'hex', 'utf8');
+        decryptedEmail += decipher.final('utf8');
         if (users[decryptedEmail].verified) {
-            sendVerificationPage(res, 'You are already verified!', false);
-        } else if (users[decryptedEmail]) {
+            res.send('<h1>You already verified!</h1>');
+        }
+        else if (users[decryptedEmail]) {
             // Update user status to "verified"
             users[decryptedEmail].verified = true;
-            sendVerificationPage(res, 'Your account was successfully verified!', true);
+            res.send(`
+                <html>
+                  <head>
+                    <style>
+                      body {
+                        font-family: Arial, sans-serif;
+                        background-color: #f4f4f4;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 100vh;
+                        margin: 0;
+                      }
+                      .container {
+                        text-align: center;
+                        background-color: white;
+                        padding: 2em;
+                        border-radius: 10px;
+                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                      }
+                      h1 {
+                        color: #4CAF50;
+                      }
+                      p {
+                        font-size: 1.2em;
+                      }
+                      a {
+                        display: inline-block;
+                        margin-top: 1em;
+                        padding: 0.5em 1em;
+                        color: white;
+                        background-color: #4CAF50;
+                        text-decoration: none;
+                        border-radius: 5px;
+                      }
+                    </style>
+                  </head>
+                  <body>
+                    <div class="container">
+                      <h1>Your account was succesfully verified!</h1>
+                      <p>Thank you for register to our website!</p>
+                      <a href="/login">Login Now</a>
+                    </div>
+                  </body>
+                </html>
+              `);
         } else {
             res.status(400).send('<h1>Invalid token</h1>');
         }
     } catch (error) {
         console.error('Error verifying token:', error);
-        res.status(500).send('<h1>Page does not exist!</h1>');
+        res.status(500).send('<h1>Page not exist!</h1>');
     }
+
 });
-
-
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
