@@ -19,7 +19,7 @@ const iv = crypto.randomBytes(16);
 const secretKey = crypto.randomBytes(32); // Generates a 32-byte (256-bit) key and converts it to a hex string
 // console.log(secretKey).toString('hex');
 // const secretKey = 'f89d00967cb05af952bcc92e6d978c0406cebffe418a4fc09460ebe3bf0b4b9f';
-const serverURL = 'https://email-verification-server.vercel.app/api';
+const serverURL = 'https://email-verification-server.vercel.app';
 
 
 const transporter = nodemailer.createTransport({
@@ -35,7 +35,11 @@ app.get('/', (req, res) => {
     res.send('<h1>Email Verification - server</h1>');
 });
 
-app.post('/register', (req, res) => {
+app.get('/api', (req, res) => {
+    res.send('<h1>Email Verification - api</h1>');
+});
+
+app.post('/api/register', (req, res) => {
     const { email, password } = req.body;
 
     if (users[email]) {
@@ -118,7 +122,7 @@ app.post('/register', (req, res) => {
     });
 });
 
-app.get('/verify', (req, res) => {
+app.get('/api/verify', (req, res) => {
     try{
         const { token } = req.query;
         const [ivHex, encryptedToken] = token.split(':');
@@ -133,7 +137,8 @@ app.get('/verify', (req, res) => {
         else if (users[decryptedEmail]) {
             // Update user status to "verified"
             users[decryptedEmail].verified = true;
-            res.send(`
+            res.redirect(`hhttps://email-verification-client.vercel.app/verification-success`);
+            /*res.send(`
                 <html>
                   <head>
                     <style>
@@ -178,7 +183,7 @@ app.get('/verify', (req, res) => {
                     </div>
                   </body>
                 </html>
-              `);
+              `);*/
         } else {
             res.status(400).send('<h1>Invalid token</h1>');
         }
