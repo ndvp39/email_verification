@@ -11,14 +11,14 @@ app.use(cors());
 const users = {};
 
 // Generate a random initialization vector
-// const iv = crypto.randomBytes(16).toString('hex');
+const iv = crypto.randomBytes(16).toString('hex');
 // console.log('Initialization Vector:', iv);
-const iv = Buffer.from('b0015b0e66ebfa2903f5fbdbb64f4683', 'hex');
+// const iv = Buffer.from('b0015b0e66ebfa2903f5fbdbb64f4683', 'hex');
 
 // Secret key for encryption and decryption
-// const secretKey = crypto.randomBytes(32).toString('hex'); // Generates a 32-byte (256-bit) key and converts it to a hex string
+const secretKey = crypto.randomBytes(32).toString('hex'); // Generates a 32-byte (256-bit) key and converts it to a hex string
 // console.log(secretKey);
-const secretKey = 'f89d00967cb05af952bcc92e6d978c0406cebffe418a4fc09460ebe3bf0b4b9f';
+// const secretKey = 'f89d00967cb05af952bcc92e6d978c0406cebffe418a4fc09460ebe3bf0b4b9f';
 const serverURL = 'https://email-verification-server.vercel.app';
 
 const transporter = nodemailer.createTransport({
@@ -83,7 +83,7 @@ app.post('/register', (req, res) => {
                     .btn {
                         display: inline-block;
                         padding: 10px 20px;
-                        background-color: #skyblue;
+                        background-color: #739fee;
                         color: #ffffff;
                         text-decoration: none;
                         border-radius: 5px;
